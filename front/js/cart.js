@@ -2,7 +2,7 @@
 
 let basket = getBasket()
 
-if(basket.length ==  0){
+if (basket.length == 0) {
     alert("votre panier est vide")
 }
 
@@ -48,6 +48,7 @@ document.querySelectorAll(".deleteItem").forEach(item => item.addEventListener("
 
 document.querySelectorAll(".itemQuantity").forEach(item => item.addEventListener("change", (e) => {
     let quantity = e.target.closest('.itemQuantity').value
+    //console.log(e.target.closest('.itemQuantity').value);
     let quantityNumber = parseInt(quantity)
     let deletItem = e.target.closest('[data-id]')
     let product = deletItem.dataset
@@ -57,17 +58,19 @@ document.querySelectorAll(".itemQuantity").forEach(item => item.addEventListener
         quantity: quantityNumber
     }
 
-// suppression de l'élément ciblé en cas d'anomalie 
+    // afficher message d'erreur si quantité négative saisie
 
-    if (quantityNumber <= 0 ){
-        removeFromBasket(productID)
+    if (quantityNumber <= 0) {
+        //removeFromBasket(productID)
+        alert("Attention vous avez saisi une valeur négative pour la quantité");
         window.location.assign("cart.html")
-    } else if (quantityNumber > 100){
-        removeFromBasket(productID)
+    } else if (quantityNumber > 100) {
+        //removeFromBasket(productID)
+        alert("Attention la qantité ne peut pas dépasser 100");
         window.location.assign("cart.html")
-    }else {
+    } else {
 
-// ajout de la quantité s'il n'y a pas d'anomalie 
+        // ajout de la quantité s'il n'y a pas d'anomalie 
 
         addQuantity(productID)
     }
@@ -82,25 +85,26 @@ setTotalPrice()
 
 let form = document.querySelector('.cart__order__form')
 
-form.firstName.addEventListener('change', function(){ 
-validNameCity(this)
+form.firstName.addEventListener('change', function () {
+    validNameCity(this)
+    //alert("sdsd");
 })
 
-form.lastName.addEventListener('change', function(){ 
-validNameCity(this)
-})
-
-form.city.addEventListener('change', function(){ 
+form.lastName.addEventListener('change', function () {
     validNameCity(this)
 })
 
-form.email.addEventListener('change', function(){ 
+form.city.addEventListener('change', function () {
+    validNameCity(this)
+})
+
+form.email.addEventListener('change', function () {
     validMail(this)
 })
 
 // création de l'objet contact au submit si formulaire valide et redirection vers la page de confirmation
 
-form.addEventListener("submit", function(e) {
+form.addEventListener("submit", function (e) {
     e.preventDefault()
     const firstName = document.getElementById('firstName').value
     const lastName = document.getElementById('lastName').value
@@ -110,30 +114,30 @@ form.addEventListener("submit", function(e) {
 
 
     contact = {
-        firstName : firstName,
-        lastName : lastName,
-        address : address,
-        city : city,
-        email : email
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        city: city,
+        email: email
     }
 
-    if( validNameCity(form.firstName) == false){
+    if (validNameCity(form.firstName) == false) {
         alert("merci de renseigner votre Prénom")
 
-    }else if (validNameCity(form.lastName) == false){
+    } else if (validNameCity(form.lastName) == false) {
         alert("merci de renseigner votre Nom")
 
-    }else if (validNameCity(form.city) == false){
+    } else if (validNameCity(form.city) == false) {
         alert("merci de renseigner votre Ville")
 
-    }else if(validMail(form.email) == false){
+    } else if (validMail(form.email) == false) {
         alert("merci de renseigner votre Email")
 
-    }else if(basket.length == 0){
+    } else if (basket.length == 0) {
         alert("votre panier est vide")
-        
-    }else{
+
+    } else {
         saveContact(contact)
         window.location.assign("confirmation.html")
-    }          
+    }
 })
