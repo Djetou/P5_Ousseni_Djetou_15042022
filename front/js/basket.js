@@ -96,7 +96,7 @@ function addQuantity(product) {
         foundProduct.quantity = product.quantity
     }
 
-    //(basket)
+    //saveBasket(basket)
     setTotalQuantity()
     setTotalPrice()
 }
